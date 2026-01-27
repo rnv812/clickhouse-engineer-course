@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    container_name: clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+      - "9363:9363"
+    environment:
+      - CLICKHOUSE_PASSWORD=123
+    volumes:
+      - ./prometheus_export.xml:/etc/clickhouse-server/config.d/prometheus_export.xml
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
