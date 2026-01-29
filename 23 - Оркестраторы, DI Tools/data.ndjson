@@ -1,0 +1,4 @@
+{"timestamp": "2026-01-29", "event": "login", "user_id": 1}
+{"timestamp": "2026-01-29", "event": "update", "user_id": 1}
+{"timestamp": "2026-01-29", "event": "logout", "user_id": 1}
+

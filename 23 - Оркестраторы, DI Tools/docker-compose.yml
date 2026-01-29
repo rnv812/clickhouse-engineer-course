@@ -1,0 +1,22 @@
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    environment:
+      - CLICKHOUSE_PASSWORD=123
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "localhost:8123/ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  vector:
+    image: timberio/vector:latest-debian
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    volumes:
+      - ./vector.yaml:/etc/vector/vector.yaml:ro
+      - ./data.ndjson:/tmp/data.ndjson:ro
